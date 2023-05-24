@@ -16,14 +16,19 @@ const handler = NextAuth({
                     client_id: process.env.INFOJOBS_CLIENT_ID
                 }
             },
+            token: {
+                url: "",
+                params: {}
+            },
             type: 'oauth',
-            profile(profile) {
+            profile(profile, token) {
                 return {
                     id: profile.id ?? "info-profile",
                     name: 'infojob-profile',
                     email: 'test@test.com',
                     image: profile?.profile_image_url,
-                    code: profile?.code
+                    code: profile?.code,
+                    token: token
                 }
             },
         }

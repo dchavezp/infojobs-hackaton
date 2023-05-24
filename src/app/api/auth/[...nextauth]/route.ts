@@ -5,6 +5,7 @@ const handler = NextAuth({
             id: "infojobs",
             name: "Infojobs",
             clientId: process.env.INFOJOBS_CLIENT_ID,
+            clientSecret: process.env.INFOJOBS_SECRET,
             authorization: {
                 url: 'https://www.infojobs.net/api/oauth/user-authorize/index.xhtml',
                 params: {

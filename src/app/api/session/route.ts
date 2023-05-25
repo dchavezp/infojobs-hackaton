@@ -6,7 +6,7 @@ interface InfojobResponse {
     access_token: string;
     refresh_token: string
 }
-export async function GET(request: Request, response: Response) {
+export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const code = searchParams.get('code');
 

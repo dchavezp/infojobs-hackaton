@@ -3,8 +3,10 @@ import { cookies } from 'next/headers';
 import { headers } from 'next/headers';
 import axios from 'axios';
 interface InfojobResponse {
-    access_token: string;
-    refresh_token: string
+    data: {
+        access_token: string;
+        refresh_token: string
+    }
 }
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -16,13 +18,14 @@ export async function GET(request: Request) {
             const client_secret = process.env.INFOJOBS_SECRET_DECODED;
             const redirect_uri = process.env.REDIRECT_URL;
             const response: InfojobResponse = await axios.post(`https://www.infojobs.net/oauth/authorize?grant_type=authorization_code&client_id=${client_id}&client_secret=${client_secret}&code=${code}&redirect_uri=${redirect_uri}`)
+            const { access_token, refresh_token } = response.data
             cookies().set({
                 name: 'accessToken',
-                value: response.access_token,
+                value: access_token,
             });
             cookies().set({
                 name: 'refreshToken',
-                value: response.refresh_token,
+                value: refresh_token,
             });
         } catch (error) {
             return new Response(JSON.stringify({ message: 'Something went wrong', error: error }), { status: 500 })

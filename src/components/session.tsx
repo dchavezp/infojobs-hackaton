@@ -2,8 +2,8 @@
 import { useSession } from "next-auth/react";
 
 function Session() {
-  const { data } = useSession();
-
+  const { data, status } = useSession();
+  if (status === "unauthenticated") return <div>No session</div>;
   return <div>{JSON.stringify(data)}</div>;
 }
 

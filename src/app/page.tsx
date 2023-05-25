@@ -5,7 +5,6 @@ export default function Home() {
   return (
     <main className="w-screen h-screen flex items-center justify-center flex-col">
       <h1>Sign With Infojobs</h1>
-      <Session />
       <SignInButton />
     </main>
   );

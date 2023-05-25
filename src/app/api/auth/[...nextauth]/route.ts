@@ -1,4 +1,5 @@
 import NextAuth from "next-auth"
+import Auth0Provider from "next-auth/providers/auth0"
 const handler = NextAuth({
     providers: [
         {
@@ -16,14 +17,11 @@ const handler = NextAuth({
                     client_id: process.env.INFOJOBS_CLIENT_ID
                 }
             },
-            token: {
-                url: "",
-                params: {}
-            },
             type: 'oauth',
+
             profile(profile, token) {
                 return {
-                    id: profile.id ?? "info-profile",
+                    id: profile.id ?? "infojobs-profile",
                     name: 'infojob-profile',
                     email: 'test@test.com',
                     image: profile?.profile_image_url,
@@ -31,7 +29,8 @@ const handler = NextAuth({
                     token: token
                 }
             },
-        }
+        },
+        Auth0Provider({ clientId: "", clientSecret: "", })
     ]
 })
 

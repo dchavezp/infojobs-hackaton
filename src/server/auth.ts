@@ -1,6 +1,4 @@
-import { type GetServerSidePropsContext } from "next";
 import {
-    getServerSession,
     type NextAuthOptions,
     type DefaultSession,
 } from "next-auth";
@@ -21,13 +19,9 @@ declare module "next-auth" {
 }
 export const authOptions: NextAuthOptions = {
     callbacks: {
-        session: ({ session, user }) => ({
-            ...session,
-            user: {
-                ...session.user,
-                id: user.id,
-            },
-        }),
+        async signIn() {
+            return true
+        },
     },
     providers: [
         {
@@ -57,5 +51,6 @@ export const authOptions: NextAuthOptions = {
             },
 
         },
-    ]
+    ],
+
 }

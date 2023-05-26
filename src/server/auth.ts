@@ -1,28 +1,12 @@
 import {
     type NextAuthOptions,
-    type DefaultSession,
 } from "next-auth";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaClient } from "@prisma/client";
 
-declare module "next-auth" {
-    interface Session extends DefaultSession {
-        user: {
-            id: string;
-            // ...other properties
-            // role: UserRole;
-        } & DefaultSession["user"];
-    }
-
-    // interface User {
-    //   // ...other properties
-    //   // role: UserRole;
-    // }
-}
+const prisma = new PrismaClient();
 export const authOptions: NextAuthOptions = {
-    callbacks: {
-        async signIn() {
-            return true
-        },
-    },
+    adapter: PrismaAdapter(prisma),
     providers: [
         {
             id: "infojobs",
